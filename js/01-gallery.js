@@ -19,18 +19,30 @@ function createGalleryList(items) {
 const addGalleryList = createGalleryList (galleryItems);
 divRefs.innerHTML = addGalleryList;
 divRefs.addEventListener ("click", onImgFocus);
+
 function onImgFocus(event) {
   event.preventDefault();
   if (event.target.nodeName !== 'IMG') {
     return;
-  }
+  } 
+  function  listener(event){
+        if (event.code === 'Escape') {
+          instance.close();
+          console.log("+");
+        }
+      }
   const instance = basicLightbox.create(`
   <img src ="${event.target.dataset.source}" width="800" height="600" >
-  `);
-  instance.show();
-  divRefs.addEventListener('keydown', event => {
-    if (event.code === 'Escape') {
-      instance.close();
+  `, {
+    onShow:(instance)=>{
+      divRefs.addEventListener('keydown', listener);
+      
+      }
+    ,
+    onClose:(instance)=>{
+      divRefs.removeEventListener('keydown', listener); 
     }
   });
+  instance.show();
+  
 }

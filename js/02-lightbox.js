@@ -9,7 +9,7 @@ function createGalleryList(items) {
       item => `<li class="gallery__item">
      <a class="allery__link" href="${item.original}">
      <img class="gallery__image"  src="${item.preview}"
-     alt="${item.description}" />
+     title ="${item.description}" />
      </a>
      </li>`
     )
@@ -17,11 +17,13 @@ function createGalleryList(items) {
 }
 const addGalleryList = createGalleryList(galleryItems);
 divRefs.innerHTML = addGalleryList;
+
 divRefs.addEventListener('click', onImgFocus);
+
 function onImgFocus(event) {
   event.preventDefault();
 
-  let gallery = new SimpleLightbox('.gallery a');
+  let gallery = new SimpleLightbox('.gallery a',{captionDelay:250});
   gallery.on('show.simplelightbox');
 
   if (event.target.nodeName !== 'IMG') {
